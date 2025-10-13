@@ -1,37 +1,57 @@
 package ru.alishev.springcourse.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
+@Entity
+@Table(name = "book")
 public class Book {
-
+    @Column(name = "book_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int book_id;
-    private int person_id;
     @NotEmpty(message = "title cannot be empty")
+    @Column(name = "title")
     private String title;
     @NotEmpty(message = "author cannot be empty")
+    @Column(name = "author")
     private String author;
     @NotNull(message = "year cannot be empty")
+    @Column(name = "book_year")
     private int book_year;
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    private Person person;
 
     public Book() {
     }
 
-    public Book(int book_id, int person_id, String title, String author, int book_year) {
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Book(int book_id, String title, String author, int book_year, Person person) {
         this.book_id = book_id;
-        this.person_id = person_id;
+        this.title = title;
+        this.author = author;
+        this.book_year = book_year;
+        this.person = person;
+    }
+
+    public Book(int book_id,String title, String author, int book_year) {
+        this.book_id = book_id;
         this.title = title;
         this.author = author;
         this.book_year = book_year;
     }
 
-    public Book(int book_id, String title, String author, int book_year) {
-        this.book_id = book_id;
-        this.title = title;
-        this.author = author;
-        this.book_year = book_year;
-    }
+
 
     public String getTitle() {
         return title;
@@ -65,11 +85,5 @@ public class Book {
         this.book_id = book_id;
     }
 
-    public int getPerson_id() {
-        return person_id;
-    }
 
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
-    }
 }

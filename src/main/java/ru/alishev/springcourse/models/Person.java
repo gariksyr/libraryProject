@@ -1,23 +1,41 @@
 package ru.alishev.springcourse.models;
 
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  * @author Neil Alishev
  */
+@Entity
+@Table(name = "person")
 public class Person {
+    @Column(name = "person_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int person_id;
+    @Column(name = "name")
     @NotEmpty(message = "name cannot be empty")
     private String name;
     @Min(value = 1900, message = "too low value you're lying")
     @Max(value = 2025, message = "now is only 2025")
     @NotNull(message = "year cannot be empty")
+    @Column(name = "birth_year")
     private int birth_year;
+    @OneToMany(mappedBy = "person")
+    private List<Book> books;
 
     public Person() {
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     public String getName() {
