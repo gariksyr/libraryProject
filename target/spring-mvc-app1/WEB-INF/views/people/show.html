@@ -10,7 +10,7 @@
 <a th:unless="${usersBooks.size()}">Person doesn`t have any books</a>
 <h1 th:if="${usersBooks.size()}">Books</h1>
 <div th:each="book : ${usersBooks}" th:if="${usersBooks.size()}">
-    <a th:href="@{/books/{id}(id=${book.getBook_id()})}" th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getBook_year()}">book</a>
+    <a th:style = "${book.isOverdue()} ? 'color: red'"  th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getBook_year()}">book</a>
 </div>
 <br>
 <a th:href="@{/people/{id}/edit(id = ${person.getPerson_id()})}">edit</a>
