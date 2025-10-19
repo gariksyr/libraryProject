@@ -11,6 +11,7 @@ import ru.alishev.springcourse.models.Person;
 import ru.alishev.springcourse.services.BookService;
 import ru.alishev.springcourse.services.PersonService;
 
+
 @Controller
 @RequestMapping("/books")
 public class BooksController {
@@ -24,8 +25,21 @@ public class BooksController {
     }
 
     @GetMapping()
-    public String index(Model model){
-        model.addAttribute("books", bookService.index());
+    public String index(Model model, @RequestParam(name = "sort_by_year", defaultValue = "false") boolean sort_by_year,
+                        @RequestParam(name = "page", required = false) Integer page,
+                        @RequestParam(name = "books_per_page",required = false) Integer books_per_page){
+        if (sort_by_year && page != null){
+            model.addAttribute("books", bookService.indexSortedAndPaginated(page, books_per_page));
+        }
+        else if (sort_by_year){
+            model.addAttribute("books", bookService.indexSorted());
+        }
+        else if (page != null) {
+            model.addAttribute("books", bookService.indexPaginated(page, books_per_page));
+        }
+        else {
+            model.addAttribute("books", bookService.index());
+        }
         return "books/index";
     }
     @GetMapping("/new")
