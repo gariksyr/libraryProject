@@ -89,4 +89,13 @@ public class BooksController {
         bookService.deleteUser(book_id);
         return "redirect:/books/" + book_id;
     }
+    @GetMapping("/search")
+    public String searchBook(){
+        return "books/search";
+    }
+    @GetMapping("/found")
+    public String foundBooks(@RequestParam(name = "title") String title, Model model){
+        model.addAttribute("books", bookService.foundBooks(title));
+        return "books/found";
+    }
 }

@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.alishev.springcourse.models.Person;
-import ru.alishev.springcourse.services.BookService;
 import ru.alishev.springcourse.services.PersonService;
 import ru.alishev.springcourse.util.PersonValidator;
 
@@ -16,16 +15,14 @@ import ru.alishev.springcourse.util.PersonValidator;
 public class PeopleController {
     private final PersonValidator personValidator;
     private final PersonService personService;
-    private final BookService bookService;
 
 
 
 
     @Autowired
-    public PeopleController(PersonValidator personValidator, PersonService personService, BookService bookService) {
+    public PeopleController(PersonValidator personValidator, PersonService personService) {
         this.personValidator = personValidator;
         this.personService = personService;
-        this.bookService = bookService;
     }
 
     @GetMapping()

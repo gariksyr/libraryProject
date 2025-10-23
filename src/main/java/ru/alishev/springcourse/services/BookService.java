@@ -78,4 +78,7 @@ public class BookService {
         book.setPerson(null);
         book.setDateOfPossession(null);
     }
+    public List<Book> foundBooks(String title){
+        return bookRepository.findBooksByTitleContaining(title);
+    }
 }
